@@ -118,5 +118,5 @@ gdbserver:
 $(TARGET_BIN): debug
 
 clean: setup
-	rm -f gdb.script $(PROJECT).asm
+	rm -fR gdb.script $(PROJECT).asm yotta_modules yotta_targets
 	yotta clean
