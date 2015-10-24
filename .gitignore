@@ -27,8 +27,15 @@
 *.out
 *.app
 
-*.json
 *.idea
 
 yotta_modules
 yotta_targets
+
+*.asm
+
+build 
+
+gdb.script
+
+.yotta.json
