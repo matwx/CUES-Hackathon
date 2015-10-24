@@ -23,38 +23,33 @@
 
 
 BLE ble;
-DigitalOut led1(p29, 1);
-DigitalOut led2(p28, 1);
+//DigitalOut led1(p29, 1);
+//DigitalOut led2(p28, 1);
 std::map<int, int> totalS;
 
 CUES::Friend f;
+int minorSize = 10;
+int minorAccpeted[10] = {1244, 1245, 1246, 1247, 1248, 1249, 1250, 1251};
 
-int minorS = 1244;
-int minorS2 = 1245;
+DigitalOut leds[2] = {DigitalOut(p29, 0), DigitalOut(p28, 0)};
+
 static int OFF = 0;
 static int ON = 1;
 
 void blinkCallback(void)
 {
-   std::map<int,int>::iterator it = totalS.find(minorS);
-   if (it != totalS.end()) {
-     totalS[minorS] = max(0,totalS[minorS] - 1);
-     printf("%i : 1\n\r", totalS[minorS]);
-     if (totalS[minorS] == 0) {
-       led1 = OFF;
-       printf("led1 Off\n\r");
+  for(int i = 0; i != minorSize; i++) {
+     std::map<int,int>::iterator it = totalS.find(minorAccpeted[i]);
+     if (it != totalS.end()) {
+       int minor = minorAccpeted[i];
+       totalS[minor] = max(0,totalS[minor] - 1);
+       if (totalS[minor] == 0) {
+         leds[i%2].write(OFF);
+       }
      }
    }
 
-   it = totalS.find(minorS2);
-   if (it != totalS.end()) {
-     totalS[minorS2] = max(0,totalS[minorS2] - 1);
-      printf("%i : 2\n\r", totalS[minorS]);
-     if (totalS[minorS2] == 0) {
-       led2 = OFF;
-       printf("led2 Off\n\r");
-     }
-   }
+
 }
 
 void advertisementCallback(const Gap::AdvertisementCallbackParams_t *params)
@@ -76,25 +71,21 @@ struct iBeacon {
     iBeacon *b = (iBeacon*)params->advertisingData;
     if (memcmp(b->uuid, uuid, sizeof(uuid)) == 0) {
       int minor =  b->minor[0] * 256 + b->minor[1];
-      if (f.canConnect(minor)) {
-        std::map<int,int>::iterator it;
-        it = totalS.find(minor);
-        if (it != totalS.end()) {
-          totalS[minor] = 10;
-          if(minor == minorS) {
-            led1 = ON;
-            printf("led1 On\n\r");
-          } if ( minor == minorS2) {
-            led2 = ON;
-            printf("led2 On\n\r");
-          }
-        }
-        else {
-          totalS.insert(std::pair<int,int>(minor,10));
-          printf("%i\n", minor);
+      //if (f.canConnect(minor)) {
+      std::map<int,int>::iterator it;
+      it = totalS.find(minor);
+      if (it != totalS.end()) {
+        totalS[minor] = 10;
+        for(int i = 0; i != minorSize; i++) {
+          if (minorAccpeted[i] == minor)
+            leds[i%2] = ON;
         }
       }
+      else {
+        totalS.insert(std::pair<int,int>(minor,10));
+      }
     }
+  //  }
   }
 }
 
@@ -119,12 +110,11 @@ void app_start(int argc, char *argv[])
     uint16_t minorNumber = 1244;
     uint16_t txPower     = 0xC9;
     iBeacon ibeacon(ble, uuid, majorNumber, minorNumber, txPower);
-    int *a = new int(4);
-    printf("%i", *a);
-    printf("hello\n\r");
+
+
     ble.gap().setAdvertisingInterval(1000); /* 1000ms. */
     ble.gap().startAdvertising();
     ble.gap().setScanParams(1800 /* scan interval */, 1500 /* scan window */);
     ble.gap().startScan(advertisementCallback);
-    led1 = 0;
+    //led1 = 0;
 }
