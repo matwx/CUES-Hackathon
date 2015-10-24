@@ -1,0 +1,24 @@
+{
+  "name": "uvisor-helloworld",
+  "version": "0.6.0",
+  "description": "Hello world example with uVisor enabled",
+  "keywords": [],
+  "author": "Alessandro Angelino <alessandro.angelino@arm.com>",
+  "repository": {
+    "url": "git@github.com:ARMmbed/uvisor-helloworld.git",
+    "type": "git"
+  },
+  "homepage": "https://github.com/ARMmbed/uvisor-helloworld",
+  "licenses": [
+    {
+      "url": "https://spdx.org/licenses/Apache-2.0",
+      "type": "Apache-2.0"
+    }
+  ],
+  "dependencies": {
+    "uvisor-lib": "~0.9.0",
+    "mbed-drivers": "*"
+  },
+  "targetDependencies": {},
+  "bin": "./source"
+}
