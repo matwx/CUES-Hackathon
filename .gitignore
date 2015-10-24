@@ -27,8 +27,7 @@
 *.out
 *.app
 
-*.json
 *.idea
-
+.yotta.json
 yotta_modules
 yotta_targets
