@@ -1,5 +1,5 @@
 {
-  "name": "ble-beacon",
+  "name": "cuesbeacons",
   "version": "0.0.1",
   "description": "BLE iBeacon example, building with yotta",
   "licenses": [
