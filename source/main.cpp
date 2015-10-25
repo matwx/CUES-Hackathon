@@ -38,7 +38,7 @@ uint16_t majorNumber = 1122;
 
 bool stationBeacon = true;
 
-int clientColour = 1; //Needs to be hardcoded and unique for each friend (0 == RED, 1 == GREEN, 2 == BLUE)
+int clientColour = 2; //Needs to be hardcoded and unique for each friend (0 == RED, 1 == GREEN, 2 == BLUE)
 
 DigitalOut leds[2] = {DigitalOut(p29, 0), DigitalOut(p28, 0)};
 InterruptIn button(p4);
