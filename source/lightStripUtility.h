@@ -22,7 +22,6 @@
 DigitalOut  led1(LED1, 1);
 DigitalOut ledb(p28, 1);
 DigitalOut vdd(p29, 1);
-InterruptIn button(p7);
 
 void change_from_input(uint16_t num, uint8_t red, uint8_t green, uint8_t blue);
 
